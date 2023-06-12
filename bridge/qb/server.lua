@@ -76,7 +76,7 @@ function changePlate(source, newPlate, currPlate)
         if result[1].citizenid == GetPlayerIdent(source) then
             local vehicle = json.decode(result[1].mods)
             vehicle.plate = newPlate
-            MySQL.query('UPDATE player_vehicles SET plate = ?, vehicle = ? WHERE plate = ?', {newPlate, json.encode(vehicle), currPlate})
+            MySQL.query('UPDATE player_vehicles SET plate = ?, mods = ? WHERE plate = ?', {newPlate, json.encode(vehicle), currPlate})
             return true
         else
             TriggerClientEvent('nass_serverstore:notify', source, "You must own the vehicle")
