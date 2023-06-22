@@ -18,8 +18,8 @@ AddEventHandler('onResourceStart', function(resource)
 	if resource == GetCurrentResourceName() then
 		local tebexConvar = GetConvar('sv_tebexSecret', '')
 		if tebexConvar == '' then
-			--error('Tebex Secret Missing please set in server.cfg and try again. The script will not work without it.')
-			--StopResource(GetCurrentResourceName())
+			error('Tebex Secret Missing please set in server.cfg and try again. The script will not work without it.')
+			StopResource(GetCurrentResourceName())
 		end
 		if not Config.DiscordLogs then
 			print('^3Webhooks Disabled^0') -- ^3 is the yellow color code for the console, ^0 is white to reset the color for everything after this message
