@@ -20,7 +20,7 @@ function getName(source)
     return xPlayer.PlayerData.charinfo.firstname..' '..xPlayer.PlayerData.charinfo.lastname
 end
 
-function AddItem(source, item, count)
+function addItem(source, item, count)
     local xPlayer = GetPlayer(source)
     TriggerClientEvent('inventory:client:ItemBox', source,  item, 'add')
     return xPlayer.Functions.AddItem(item, count)
@@ -31,12 +31,12 @@ function RemoveItem(source, item, count)
     player.Functions.RemoveItem(item, count)
 end
 
-function AddWeapon(source, weapon, ammo)
+function addWeapon(source, weapon, ammo)
     local xPlayer = GetPlayer(source)
     return xPlayer.Functions.AddItem(weapon, 1, nil, nil)
 end
 
-function AddMoney(source, type, amount)
+function addMoney(source, type, amount)
     if type == 'money' then type = 'cash' end
     local xPlayer = GetPlayer(source)
     xPlayer.Functions.AddMoney(type, amount)
