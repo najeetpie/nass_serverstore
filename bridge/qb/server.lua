@@ -95,7 +95,7 @@ function changeName(source, first, last)
             local charInfo = json.decode(result[1].charinfo)
             charInfo.firstname = first
             charInfo.lastname = last
-            MySQL.query('UPDATE players SET charinfo = ? WHERE citizenid = ?', {json.encode(charInfo), currPlate})
+            MySQL.query('UPDATE players SET charinfo = ? WHERE citizenid = ?', {json.encode(charInfo), ident})
             return true
         else
             TriggerClientEvent('nass_serverstore:notify', source, "Player data was not found")
