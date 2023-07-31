@@ -12,13 +12,7 @@
 
 ## Installation
 
-* Download the script and add the sql file to your database
-* In Your Store, go to the package you would like to add to the script
-* Add a game server command to your server of choice
-* Set the command When the package is purchased
-* Add purchase_package_tebex {"transid":"{transaction}", "packagename":"{packageName}"} as the command
-* Press the settings icon on the right and change the command to Execute the command even if the player is offline
-* Press Update
+https://nass-scripts.gitbook.io/docs/
 
 ## Usage
 
