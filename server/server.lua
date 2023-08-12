@@ -47,6 +47,7 @@ RegisterCommand('redeem', function(source, _, rawCommand)
 						elseif j.type == 'car' then
 							redeemedCars[identifier] = j.model
 							TriggerClientEvent('nass_serverstore:spawnveh', source, j.vehicletype)
+							Wait(500)	
 						end
 						Wait(100)
 					end
@@ -104,7 +105,7 @@ RegisterNetEvent('nass_serverstore:setVehicle', function (vehicleProps, model, v
 	if redeemedCars[identifier] == model then
 		addVehtoDB(src, vehicleProps, model, vehType)
 	else
-		print('[nass_serverstore]: A player tried to exploit the vehicle spawn trigger! Identifier: '..xidentifier)
+		print('[nass_serverstore]: A player tried to exploit the vehicle spawn trigger! Identifier: '..identifier)
 		SendToDiscord('Attempted Exploit Detected!', '**Identifier: **'..identifier..'\n**Comments:** Player has attempted to trigger the spawn vehicle event without a redemption code.', 3066993)
 		DropPlayer(src, "Attempted exploit was detected")
 	end
