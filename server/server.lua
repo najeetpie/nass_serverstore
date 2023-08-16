@@ -94,8 +94,8 @@ RegisterCommand('purchase_package_tebex', function(source, args)
 			inProgress = false
 		end)
 	else
-		print(GetPlayerName(source)..' tried to give themself a store code.')
-		SendToDiscord('Attempted Exploit', GetPlayerName(source)..' tried to give themself a store code!', 15158332)
+		print(GetPlayerName(source)..' tried to give themselves a store code.')
+		SendToDiscord('Attempted Exploit', GetPlayerName(source)..' tried to give themselves a store code!', 15158332)
 	end
 end, false)
 
