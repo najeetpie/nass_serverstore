@@ -48,9 +48,14 @@ end
 
 function addVehtoDB(src, props, model, vehType)
     local xPlayer = GetPlayer(src)
-    MySQL.insert('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', {xPlayer.PlayerData.license,xPlayer.PlayerData.citizenid,model,GetHashKey(model),'{}',props.plate,'pillboxgarage',1}, function()
+    if GetResourceState('qbx_core') == 'started' then
+        exports.qbx_vehicles:CreatePlayerVehicle({model=model, citizenid=xPlayer.PlayerData.citizenid})
         SendToDiscord('Vehicle Redeemed', GetPlayerName(src)..' redeemed their car!', 15158332)
-    end)
+    else
+        MySQL.insert('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', {xPlayer.PlayerData.license,xPlayer.PlayerData.citizenid,model,GetHashKey(model),'{}',props.plate,'pillboxgarage',1}, function()
+            SendToDiscord('Vehicle Redeemed', GetPlayerName(src)..' redeemed their car!', 15158332)
+        end)
+    end
 end
 
 --taken from qb-vehicleshop
