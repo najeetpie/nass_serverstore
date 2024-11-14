@@ -8,10 +8,7 @@ function Notify(message)
     if GetResourceState('nass_notifications') == 'started' then
         exports["nass_notifications"]:ShowNotification("alert", "Info", message, 5000)
     else
-		lib.notify({description = message})
-        BeginTextCommandThefeedPost('STRING')
-        AddTextComponentSubstringPlayerName(message)
-        EndTextCommandThefeedPostTicker(0, 1)
+	lib.notify({description = message})
     end
 end
 
