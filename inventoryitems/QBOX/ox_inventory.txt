@@ -1,0 +1,12 @@
+	['platechanger'] = {
+		label = 'Plate Changer',
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+	['namechanger'] = {
+		label = 'Name Changer',
+		weight = 1,
+		stack = true,
+		close = true,
+	},

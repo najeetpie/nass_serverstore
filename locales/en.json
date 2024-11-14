@@ -1,0 +1,19 @@
+{
+    "plate":  {
+        "short": "Plate is too short",
+        "long": "Plate is too long",
+        "changed_from": "Plate has been changed from ",
+        "changed_to": " to ",
+        "in_use": "That plate is already in use, try again",
+    },
+
+    "must_own_veh": "You must own the vehicle",
+    "not_in_veh": "You must be in a vehicle",
+    "veh_not_in_db": "This vehicle is not in the database",
+    "player_not_found": "Player data was not found",
+    "name_changed": "You have changed your name to ",
+
+    "code_redeemed": "You have successfully redeemed a code for: ",
+    "code_invalid": "Code is currently invalid, if you have just purchased please try this code again in a few minutes",
+    "not_configured": " package is not configured by the server owner. Please contact the admin team."
+}

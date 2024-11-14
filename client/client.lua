@@ -1,13 +1,14 @@
 local spawnedCars = {}
 
 RegisterNetEvent('nass_serverstore:notify', function(message)
-	notify(message)
+	Notify(message)
 end)
 
-function notify(message)
+function Notify(message)
     if GetResourceState('nass_notifications') == 'started' then
         exports["nass_notifications"]:ShowNotification("alert", "Info", message, 5000)
     else
+		lib.notify({description = message})
         BeginTextCommandThefeedPost('STRING')
         AddTextComponentSubstringPlayerName(message)
         EndTextCommandThefeedPostTicker(0, 1)
@@ -89,7 +90,7 @@ AddEventHandler('onResourceStop', function(resourceName)
 	if (GetCurrentResourceName() ~= resourceName) then
 	  return
 	end
-	
+
 	for k, v in pairs(spawnedCars) do
         SetEntityAsMissionEntity(v)
 		DeleteVehicle(v)
@@ -109,10 +110,10 @@ Citizen.CreateThread(function()
         EndTextCommandSetBlipName(blip)
 
         for r, n in pairs(v.vehicles) do
-            CreateDisplayVehicle(n.pos, n.model, "PAIDCAR")	
+            CreateDisplayVehicle(n.pos, n.model, "PAIDCAR")
         end
     end
-	
+
 	Wait(1000)
 end)
 
@@ -148,21 +149,21 @@ AddEventHandler('nass_serverstore:openPlateChange', function()
 				if newPlate then
                     newPlate = string.upper(newPlate)
                     if newPlateLength <= 0 then
-                        notify('Plate is too short')
+                        Notify(locale('plate.short'))
                     elseif 8 < newPlateLength then
-                        notify('Plate is too long')
+                        Notify(locale('plate.long'))
                     else
 						ServerCallback('nass_serverstore:changeplate', function(shouldChange)
                             print(shouldChange)
 							if shouldChange then
 								SetVehicleNumberPlateText(vehicle, newPlate)
-                                notify('Plate has been changed from ' .. currPlate .. ' to ' .. newPlate)
+                                Notify(locale('plate.changed_from') .. currPlate .. locale('plate.changed_to') .. newPlate)
 							end
 						end, newPlate, currPlate)
                     end
 				end
 			else
-				notify('You must be in a vehicle')
+				Notify(locale('not_in_veh'))
 			end
 		end
 	end, "plate")
@@ -179,7 +180,7 @@ AddEventHandler('nass_serverstore:openNameChange', function()
 
 			ServerCallback('nass_serverstore:changename', function(shouldChange)
 				if shouldChange then
-					notify("You have changed your name to "..first.." "..last..".")
+					Notify(locale('name_changed')..first.." "..last..".")
 				end
 			end, first, last)
 		end

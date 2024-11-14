@@ -16,12 +16,12 @@ function GetPlayerIdent(source)
     return xPlayer.identifier
 end
 
-function getName(source)
+function GetName(source)
     local xPlayer = GetPlayer(source)
-    return xPlayer.getName()
+    return xPlayer.GetName()
 end
 
-function addItem(source, itemName, count)
+function AddItem(source, itemName, count)
     local xPlayer = GetPlayer(source)
     return xPlayer.addInventoryItem(itemName, count)
 end
@@ -32,12 +32,12 @@ function RemoveItem(source, item, count)
 end
 
 
-function addWeapon(source, weaponName, ammo)
+function AddWeapon(source, weaponName, ammo)
     local xPlayer = GetPlayer(source)
-    xPlayer.addWeapon(weaponName, ammo)
+    xPlayer.AddWeapon(weaponName, ammo)
 end
 
-function addMoney(source, type, amount)
+function AddMoney(source, type, amount)
     if type == 'cash' then type = 'money' end
     local player = GetPlayer(source)
     player.addAccountMoney(type, amount)
@@ -47,7 +47,7 @@ function RegisterUsableItem(item, cb)
     ESX.RegisterUsableItem(item, cb)
 end
 
-function addVehtoDB(src, props, model, vehType)
+function AddVehtoDB(src, props, model, vehType)
     local xPlayer = GetPlayer(src)
     MySQL.insert('INSERT INTO owned_vehicles (owner, plate, vehicle, type) VALUES (?, ?, ?, ?)', {xPlayer.identifier,props.plate,json.encode(props),vehType}, function()
         SendToDiscord('Vehicle Redeemed', GetPlayerName(src)..' redeemed their car!', 15158332)
@@ -59,7 +59,7 @@ function GeneratePlate()
 end
 
 
-function changePlate(source, newPlate, currPlate)
+function ChangePlate(source, newPlate, currPlate)
     local rest = MySQL.query.await('SELECT * FROM owned_vehicles WHERE plate = ?', {newPlate})
     if rest[1] ~= nil then
         TriggerClientEvent('nass_serverstore:notify', source, "That plate is already in use, try again")
@@ -83,7 +83,7 @@ function changePlate(source, newPlate, currPlate)
     end
 end
 
-function changeName(source, first, last)
+function ChangeName(source, first, last)
     MySQL.query('UPDATE users SET firstname = ?, lastname = ? WHERE identifier = ?', {first, last, GetPlayerIdent(source)})
     return true
 end

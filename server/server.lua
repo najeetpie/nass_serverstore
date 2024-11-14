@@ -30,7 +30,7 @@ end)
 RegisterCommand('redeem', function(source, _, rawCommand)
 	local tbxid = rawCommand:sub(8)
 	local identifier = GetPlayerIdent(source)
-	local xName = getName(source)
+	local xName = GetName(source)
 	MySQL.query('SELECT * FROM codes WHERE code = @playerCode', {['@playerCode'] = tbxid}, function(result)
 		if result[1] then
 			local boughtPackages = json.decode(result[1].packagename)
@@ -39,27 +39,27 @@ RegisterCommand('redeem', function(source, _, rawCommand)
 				if Config.Packages[i] ~= nil then
 					for h, j in pairs(Config.Packages[i].Items) do
 						if j.type == 'item' then
-							addItem(source, j.name, j.amount)
+							AddItem(source, j.name, j.amount)
 						elseif j.type == 'weapon' then
-							addWeapon(source, j.name, j.amount)
+							AddWeapon(source, j.name, j.amount)
 						elseif j.type == 'account' then
-							addMoney(source, j.name, j.amount)
+							AddMoney(source, j.name, j.amount)
 						elseif j.type == 'car' then
 							redeemedCars[identifier] = j.model
-							TriggerClientEvent('nass_serverstore:spawnveh', source, j.vehicletype)
-							Wait(500)	
+							-- TriggerClientEvent('nass_serverstore:spawnveh', source, j.vehicletype)
+							Wait(500)
 						end
 						Wait(100)
 					end
-					TriggerClientEvent('nass_serverstore:notify', source, "You have successfully redeemed a code for: " .. tbxid)
+					TriggerClientEvent('nass_serverstore:notify', source, locale('code_redeemed') .. tbxid)
 					SendToDiscord('Code Redeemed', '**Package Name: **'..i..'\n**Character Name: **'..xName..'\n**Identifier: **'..identifier, 3066993)
 				else
-					TriggerClientEvent('nass_serverstore:notify', source, "The "..i.." package is not configured by the server owner. Please contact the admin team.")
+					TriggerClientEvent('nass_serverstore:notify', source, i..locale('not_configured'))
 				end	
 			end
 			MySQL.query.await('DELETE FROM codes WHERE code = @playerCode', {['@playerCode'] = tbxid})
 		else
-			TriggerClientEvent('nass_serverstore:notify', source, "Code is currently invalid, if you have just purchased please try this code again in a few minutes")
+			TriggerClientEvent('nass_serverstore:notify', source, locale('code_invalid'))
 		end
 	end)
 end, false)
@@ -103,7 +103,7 @@ RegisterNetEvent('nass_serverstore:setVehicle', function (vehicleProps, model, v
 	local src = source
 	local identifier = GetPlayerIdent(src)
 	if redeemedCars[identifier] == model then
-		addVehtoDB(src, vehicleProps, model, vehType)
+		AddVehtoDB(src, vehicleProps, model, vehType)
 	else
 		print('[nass_serverstore]: A player tried to exploit the vehicle spawn trigger! Identifier: '..identifier)
 		SendToDiscord('Attempted Exploit Detected!', '**Identifier: **'..identifier..'\n**Comments:** Player has attempted to trigger the spawn vehicle event without a redemption code.', 3066993)
@@ -143,7 +143,7 @@ end)
 RegisterCallback("nass_serverstore:changename", function(source, cb, first, last)
 	local src = source
 	local identifier = GetPlayerIdent(src)
-    if changeName(src, first, last) then
+    if ChangeName(src, first, last) then
 		RemoveItem(src, 'namechanger', 1)
 		SendToDiscord('Name Change', GetPlayerName(src)..' has changed their name to '..first..' '.. last.. '.', 1752220)
 		cb(true)
@@ -156,7 +156,7 @@ end)
 RegisterCallback("nass_serverstore:changeplate", function(source, cb, newPlate, currPlate)
 	local src = source
 	local identifier = GetPlayerIdent(src)
-    if changePlate(src, newPlate, currPlate) then
+    if ChangePlate(src, newPlate, currPlate) then
 		RemoveItem(src, 'platechanger', 1)
 		SendToDiscord('Plate Change', GetPlayerName(src)..' has changed their plate to '..newPlate..'.', 1752220)
 		cb(true)
